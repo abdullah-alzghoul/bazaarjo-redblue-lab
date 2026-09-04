@@ -1,16 +1,28 @@
-# BazaarJo Red/Blue Team Cybersecurity Lab
+# Bazaarjo Red/Blue Lab
 
-## Overview
-A multi-VM hands-on cybersecurity lab simulating attack vector execution (Red Team) and SIEM log monitoring/telemetry analysis (Blue Team).
+A four-phase attack-defense lifecycle simulation built for Cybersecurity Graduation Field Training.
+This repository contains the complete infrastructure-as-code, detection logic, and documentation for a controlled penetration testing environment.
 
-## Environment Architecture
-* **VM1 (Target):** Debian 11 - Apache2, Vulnerable Flask App (`192.168.56.101`)
-* **VM2 (SIEM):** Ubuntu Server - Splunk Enterprise (`192.168.56.102`)
-* **VM3 (Attacker):** Kali Linux - Attack Execution Tools (`192.168.56.103`)
+## Architecture
+- **VM1-Target** (`192.168.56.101`): Vulnerable Flask web application (Apache/mod_wsgi)
+- **VM2-SIEM** (`192.168.56.102`): Splunk Enterprise log collector and indexer
+- **VM3-Attacker** (`192.168.56.103`): Kali Linux offensive workstation
 
-## Repository Structure
-* `vm1-target/`: Web application source code and system configuration files.
-* `vm2-siem/`: Splunk input configurations and indexes.
-* `vm3-attacker/`: Reconnaissance and attack payload scripts.
-* `docs/`: Network topology and system architecture diagrams.
-* `detection-queries/`: SPL queries for attack detection.
+## Vulnerabilities Implemented
+1. Unrestricted File Upload
+2. Reflected Cross-Site Scripting (XSS)
+3. OS Command Injection
+4. SQL Injection (Union-based)
+
+## Log Forwarding
+- Apache access logs → Splunk via rsyslog/imfile (UDP/514)
+- Bash command history → Splunk via rsyslog (UDP/514)
+
+## Team Roles
+- S1 (Architecture & Visibility): Abdallah Ali Alzghoul
+- S2 (Red Team): Abdallah Ali Alzghoul
+- S3 (Blue Team): Abdallah Ali Alzghoul
+- S4 (Mitigation): Abdallah Ali Alzghoul
+
+## Quick Start
+See `vm1-target/scripts/setup-vm1.sh` to rebuild the target environment.
