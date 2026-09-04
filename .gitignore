@@ -1,0 +1,13 @@
+# Python
+__pycache__/
+*.pyc
+*.pyo
+
+# Runtime artifacts & Uploads
+vm1-target/app/uploads/*
+!vm1-target/app/uploads/.gitkeep
+*.db-journal
+
+# Environment & System
+.env
+.DS_Store
