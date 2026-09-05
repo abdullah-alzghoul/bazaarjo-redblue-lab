@@ -20,9 +20,9 @@ This repository contains the complete infrastructure-as-code, detection logic, a
 
 ## Team Roles
 - S1 (Architecture & Visibility): Abdallah Ali Alzghoul
-- S2 (Red Team): ---------------------
-- S3 (Blue Team): ---------------------
-- S4 (Mitigation): --------------------
+- S2 (Red Team): Ashraf Khaled Al-Mashaqbeh
+- S3 (Blue Team): Osama
+- S4 (Mitigation): Mohammad Mahmoud Ghaith
 
 ## Quick Start
 See `vm1-target/scripts/setup-vm1.sh` to rebuild the target environment.
