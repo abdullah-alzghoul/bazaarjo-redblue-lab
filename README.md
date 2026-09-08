@@ -7,7 +7,7 @@ This repository contains the complete infrastructure-as-code, detection logic, a
 
 | Role | Student | Responsibility |
 |---|---|---|
-| **S1 — Architecture & Visibility** | **Abdallah Ali Abdallah Alzghoul** | Lab build, log forwarding, SIEM deployment, Git baseline |
+| **S1 — Architecture & Visibility** | **Abdallah Ali Abdallah Al-Zghoul** | Lab build, log forwarding, SIEM deployment, Git baseline |
 | **S2 — Red Team** | **Ashraf Khaled Al-Mashaqbeh** | Black-box penetration testing, exploit chain, RCE proof |
 | **S3 — Blue Team / IR** | **Osama Abdel-Fattah Al-Najjar** | SIEM timeline reconstruction, containment, detection queries |
 | **S4 — Mitigation & QA** | **Mohammad Mahmoud Ghaith** | Git-based code fixes, re-exploitation validation |
