@@ -17,3 +17,4 @@ This directory contains the detection logic engineered by the Blue Team to monit
 2. **YARA Scanning:** Run YARA against the upload directory:
    ```bash
    yara -r webshell_rule.yar /var/www/html/vulnerable-app/uploads/
+```
