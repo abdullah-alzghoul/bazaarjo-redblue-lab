@@ -1,25 +1,25 @@
 # ====================================================================
 # Bazaarjo Lab - Splunk Detection Queries (SIEM)
-# Author: Osama Abdel-Fattah Al-Najjar(Blue Team / IR)
-# Target Index: bazaarjo_logs
+# Author: Osama Abdel-Fattah Al-Najjar (Blue Team / IR)
+# Target Index: bazaarjo_lab
 # ====================================================================
 
 # 1. Detect SQL Injection Attempts (HTTP GET/POST)
-index=bazaarjo_logs sourcetype=access_combined 
+index=bazaarjo_lab sourcetype=access_combined 
 | search uri_query="*OR*" OR uri_query="*UNION*" OR uri_query="*SELECT*" OR uri_query="*%27*"
 | table _time clientip method uri_query status
 
 # 2. Detect OS Command Injection Attacks
-index=bazaarjo_logs sourcetype=access_combined 
+index=bazaarjo_lab sourcetype=access_combined 
 | search uri_path="/cmdi" (uri_query="*%3B*" OR uri_query="*%26*" OR uri_query="*%7C*" OR uri_query="*whoami*" OR uri_query="*cat*")
 | table _time clientip uri_query status
 
 # 3. Detect Web Shell Access & Execution (/uploads/ shell execution)
-index=bazaarjo_logs sourcetype=access_combined uri_path="/uploads/*" 
+index=bazaarjo_lab sourcetype=access_combined uri_path="/uploads/*" 
 | search uri_path="*.php*" OR uri_query="*cmd=*"
 | table _time clientip uri_path uri_query status useragent
 
 # 4. Monitor Post-Exploitation Commands via Bash Audit
-index=bazaarjo_logs sourcetype=syslog "bash_audit"
+index=bazaarjo_lab sourcetype=syslog "bash_audit"
 | rex "bash_audit (?<user>\w+) \[\d+\]: (?<command>.*)"
 | table _time host user command
