@@ -1,25 +1,55 @@
-# ====================================================================
-# Bazaarjo Lab - Splunk Detection Queries (SIEM)
-# Author: Osama Abdel-Fattah Al-Najjar (Blue Team / IR)
-# Target Index: bazaarjo_lab
-# ====================================================================
+===============================================================================
+Bazaarjo Red/Blue Lab - Splunk Detection Queries (SPL)
+Updated for Syslog & Combined Sourcetypes + Expanded Threat Vectors
+===============================================================================
 
-# 1. Detect SQL Injection Attempts (HTTP GET/POST)
-index=bazaarjo_lab sourcetype=access_combined 
-| search uri_query="*OR*" OR uri_query="*UNION*" OR uri_query="*SELECT*" OR uri_query="*%27*"
-| table _time clientip method uri_query status
+-------------------------------------------------------------------------------
+1. Path Traversal Detection
+-------------------------------------------------------------------------------
+(sourcetype=access_combined OR sourcetype=syslog) 
+("..%2f" OR "../" OR "..%5c" OR "..\\" OR "%2e%2e%2f" OR "etc/passwd" OR "win.ini")
+| stats count min(_time) as first_seen max(_time) as last_seen by src_ip, uri_path, uri_query, status
+| eval first_seen=strftime(first_seen, "%Y-%m-%d %H:%M:%S"), last_seen=strftime(last_seen, "%Y-%m-%d %H:%M:%S")
+| sort - count
 
-# 2. Detect OS Command Injection Attacks
-index=bazaarjo_lab sourcetype=access_combined 
-| search uri_path="/cmdi" (uri_query="*%3B*" OR uri_query="*%26*" OR uri_query="*%7C*" OR uri_query="*whoami*" OR uri_query="*cat*")
-| table _time clientip uri_query status
+-------------------------------------------------------------------------------
+2. OS Command Injection Detection
+-------------------------------------------------------------------------------
+(sourcetype=access_combined OR sourcetype=syslog) 
+("*whoami*" OR "*cat*" OR "*id*" OR "*uname*" OR "*%3B*" OR "*%26*" OR "*%7C*" OR "*%60*")
+| stats count min(_time) as first_seen max(_time) as last_seen by src_ip, uri_path, uri_query, status
+| eval first_seen=strftime(first_seen, "%Y-%m-%d %H:%M:%S"), last_seen=strftime(last_seen, "%Y-%m-%d %H:%M:%S")
+| sort - count
 
-# 3. Detect Web Shell Access & Execution (/uploads/ shell execution)
-index=bazaarjo_lab sourcetype=access_combined uri_path="/uploads/*" 
-| search uri_path="*.php*" OR uri_query="*cmd=*"
-| table _time clientip uri_path uri_query status useragent
+-------------------------------------------------------------------------------
+3. Web Shell & Unrestricted File Upload Detection
+-------------------------------------------------------------------------------
+(sourcetype=access_combined OR sourcetype=syslog) 
+(uri_path="*.php*" OR uri_path="*/uploads/*")
+| stats count min(_time) as first_seen max(_time) as last_seen by src_ip, uri_path, method, status
+| eval first_seen=strftime(first_seen, "%Y-%m-%d %H:%M:%S"), last_seen=strftime(last_seen, "%Y-%m-%d %H:%M:%S")
+| sort - count
 
-# 4. Monitor Post-Exploitation Commands via Bash Audit
-index=bazaarjo_lab sourcetype=syslog "bash_audit"
-| rex "bash_audit (?<user>\w+) \[\d+\]: (?<command>.*)"
-| table _time host user command
+-------------------------------------------------------------------------------
+4. Server-Side Request Forgery (SSRF) Detection
+-------------------------------------------------------------------------------
+(sourcetype=access_combined OR sourcetype=syslog) 
+("url=http*" OR "url=https*" OR "url=127.0.0.1*" OR "url=localhost*" OR "url=169.254.*")
+| stats count min(_time) as first_seen max(_time) as last_seen by src_ip, uri_path, uri_query, status
+| eval first_seen=strftime(first_seen, "%Y-%m-%d %H:%M:%S"), last_seen=strftime(last_seen, "%Y-%m-%d %H:%M:%S")
+| sort - count
+
+-------------------------------------------------------------------------------
+5. Consolidated High-Risk Threat Dashboard Query
+-------------------------------------------------------------------------------
+(sourcetype=access_combined OR sourcetype=syslog) 
+("..%2f" OR "../" OR "*whoami*" OR "*cat*" OR "*id*" OR "*uname*" OR "url=http*" OR "*.php*")
+| eval Attack_Type=case(
+    like(uri_query, "%..%"), "Path Traversal",
+    like(uri_query, "%whoami%") OR like(uri_query, "%id%") OR like(uri_query, "%uname%") OR like(uri_query, "%cat%"), "Command Injection",
+    like(uri_path, "%.php%"), "Web Shell Access / Upload",
+    like(uri_query, "%url=http%"), "SSRF Attempt",
+    1=1, "Other Suspicious Activity"
+)
+| stats count by src_ip, Attack_Type, status
+| sort - count
