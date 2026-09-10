@@ -1,10 +1,18 @@
+# Note:
+# The primary project vulnerabilities are:
+# - SQL Injection
+# - Command Injection
+# - File Upload
+# - XSS
+#
+# Additional detections are included as extended Blue Team monitoring.
 ===============================================================================
 Bazaarjo Red/Blue Lab - Splunk Detection Queries (SPL)
 Updated for Syslog & Combined Sourcetypes + Expanded Threat Vectors
 ===============================================================================
 
 -------------------------------------------------------------------------------
-1. Path Traversal Detection
+1. Additional Detection: Path Traversal Monitoring
 -------------------------------------------------------------------------------
 (sourcetype=access_combined OR sourcetype=syslog) 
 ("..%2f" OR "../" OR "..%5c" OR "..\\" OR "%2e%2e%2f" OR "etc/passwd" OR "win.ini")
@@ -31,7 +39,7 @@ Updated for Syslog & Combined Sourcetypes + Expanded Threat Vectors
 | sort - count
 
 -------------------------------------------------------------------------------
-4. Server-Side Request Forgery (SSRF) Detection
+4. Additional Detection: SSRF Monitoring
 -------------------------------------------------------------------------------
 (sourcetype=access_combined OR sourcetype=syslog) 
 ("url=http*" OR "url=https*" OR "url=127.0.0.1*" OR "url=localhost*" OR "url=169.254.*")
