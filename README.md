@@ -45,23 +45,25 @@ This repository contains the complete infrastructure-as-code, detection logic, a
 
 ### 1. Clone Repository
 
-git clone ...
+```bash
+git clone https://github.com/abdullah-alzghoul/bazaarjo-redblue-lab.git
+cd bazaarjo-redblue-lab
+```
 
-### 2. Setup VM1
+### 2. Setup VM1 Target
 
 cd vm1-target/scripts
+chmod +x setup_vm1.sh
 ./setup_vm1.sh
 
-### 3. Setup VM2
+### 3. Setup VM2 SIEM
 
-cd vm2-siem/scripts
+cd ../../vm2-siem/scripts
+chmod +x setup_vm2.sh
 ./setup_vm2.sh
 
-### 4. Run Attacker Scripts
+### 4. Start Red Team Testing
 
-cd vm3-attacker/scripts
+cd ../../vm3-attacker/scripts
+chmod +x reconnaissance.sh
 ./reconnaissance.sh
-
-```bash
-git clone [https://github.com/abdullah-alzghoul/bazaarjo-redblue-lab.git](https://github.com/abdullah-alzghoul/bazaarjo-redblue-lab.git)
-cd bazaarjo-redblue-lab
