@@ -4,9 +4,9 @@ echo "[+] Updating system packages..."
 sudo apt-get update && sudo apt-get install -y apache2 libapache2-mod-wsgi-py3 python3-flask rsyslog
 
 echo "[+] Deploying Apache VHost and Rsyslog config..."
-sudo cp ../config/apache-vhost.conf /etc/apache2/sites-available/vulnerable-app.conf
-sudo cp ../config/rsyslog-forward.conf /etc/rsyslog.d/50-bazaarjo.conf
-sudo cp ../config/bash-audit.sh /etc/profile.d/audit.sh
+sudo cp ../config/apache_vhost.conf /etc/apache2/sites-available/vulnerable-app.conf
+sudo cp ../config/rsyslog_forward.conf /etc/rsyslog.d/50-bazaarjo.conf
+sudo cp ../config/bash_audit.sh /etc/profile.d/audit.sh
 
 sudo a2ensite vulnerable-app.conf
 sudo systemctl restart apache2 rsyslog
