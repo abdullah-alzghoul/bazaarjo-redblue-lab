@@ -8,7 +8,7 @@ This directory contains the detection logic engineered by the Blue Team to monit
 |---|---|---|---|
 | **SQL Injection** | Apache Access Logs | Splunk SPL Pattern Matching | `splunk_queries.spl` |
 | **Command Injection** | Apache Access Logs | Regex URI Parameter Scanning | `splunk_queries.spl` |
-| **Unrestricted File Upload** | Apache Access / Disk | YARA File Scanner & SIEM Alert | `webshell_rule.yar` |
+| **Unrestricted File Upload** | Apache Access / Disk | YARA File Scanner & SIEM Alert | `php_webshell_detection.yar` |
 | **Post-Exploitation** | Linux Audit Logs (`/var/log/syslog`) | Syslog Bash Audit Parser | `splunk_queries.spl` |
 
 ## Detection Rule Purpose
@@ -24,7 +24,7 @@ The queries focus on:
 - Web shell access.
 - Suspicious attacker behavior after exploitation.
 
-### webshell_rule.yar
+### php_webshell_detection.yar
 
 This YARA rule detects uploaded malicious PHP web shells by searching for dangerous execution functions such as:
 
@@ -47,5 +47,5 @@ Each detection rule should be tested by executing the corresponding attack scena
 1. **Splunk Integration:** Import queries from `splunk_queries.spl` into Splunk Enterprise saved searches and alert actions.
 2. **YARA Scanning:** Run YARA against the upload directory:
    ```bash
-   yara -r webshell_rule.yar /var/www/html/vulnerable-app/uploads/
+   yara -r php_webshell_detection.yar /var/www/html/vulnerable-app/uploads/
    ```
