@@ -1,6 +1,8 @@
 from flask import Flask, request, render_template_string, redirect, send_from_directory
 import os
 import sqlite3
+import subprocess
+import ipaddress
 from werkzeug.utils import secure_filename
 
 app = Flask(__name__)
@@ -98,12 +100,44 @@ def xss():
 
 @app.route('/cmdi')
 def cmdi():
+
     host = request.args.get('host', '127.0.0.1')
+
     try:
-        result = os.popen(f'ping -c 2 {host}').read()
+
+        ipaddress.ip_address(host)
+
+        result = subprocess.run(
+            [
+                'ping',
+                '-c',
+                '2',
+                host
+            ],
+            capture_output=True,
+            text=True,
+            timeout=5
+        )
+
+        output = (
+            result.stdout
+            if result.returncode == 0
+            else result.stderr
+        )
+
+    except ValueError:
+
+        output = "Error: Invalid IP address input."
+
     except Exception as e:
-        result = str(e)
-    return render_template_string(f'<h2>Network Diagnostic</h2><pre>{result}</pre>')
+
+        output = str(e)
+
+
+    return render_template_string(
+        '<h2>Network Diagnostic</h2><pre>{{ output }}</pre>',
+        output=output
+    )
 
 @app.route('/sqli')
 def sqli():
