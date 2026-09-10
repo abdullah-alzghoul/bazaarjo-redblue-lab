@@ -66,11 +66,6 @@ def upload_file():
     </form>
     ''')
 
-@app.route('/uploads/<filename>')
-def uploaded_file(filename):
-    safe_filename = secure_filename(filename)
-    return send_from_directory(app.config['UPLOAD_FOLDER'], safe_filename)
-
 @app.route('/xss')
 def xss():
     name = request.args.get('name', 'guest')
