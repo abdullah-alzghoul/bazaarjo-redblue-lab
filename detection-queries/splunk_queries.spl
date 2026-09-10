@@ -12,7 +12,7 @@ Updated for Syslog & Combined Sourcetypes + Expanded Threat Vectors
 ===============================================================================
 
 -------------------------------------------------------------------------------
-1. Additional Detection: Path Traversal Monitoring
+1. Extended Monitoring: Path Traversal (Optional)
 -------------------------------------------------------------------------------
 (sourcetype=access_combined OR sourcetype=syslog) 
 ("..%2f" OR "../" OR "..%5c" OR "..\\" OR "%2e%2e%2f" OR "etc/passwd" OR "win.ini")
@@ -53,7 +53,7 @@ last_seen=strftime(last_seen,"%Y-%m-%d %H:%M:%S")
 | sort - count
 
 -------------------------------------------------------------------------------
-5. Additional Detection: SSRF Monitoring
+5. Extended Monitoring: SSRF (Optional)
 -------------------------------------------------------------------------------
 (sourcetype=access_combined OR sourcetype=syslog) 
 ("url=http*" OR "url=https*" OR "url=127.0.0.1*" OR "url=localhost*" OR "url=169.254.*")
