@@ -95,8 +95,16 @@ def uploaded_file(filename):
 
 @app.route('/xss')
 def xss():
-    name = request.args.get('name', 'guest')
-    return render_template_string(f'<h2>Hello, {name}!</h2><p>No input validation applied.</p>')
+
+    name = request.args.get(
+        'name',
+        'guest'
+    )
+
+    return render_template_string(
+        '<h2>Hello, {{ name }}!</h2><p>Input sanitized via Jinja2 auto-escaping.</p>',
+        name=name
+    )
 
 @app.route('/cmdi')
 def cmdi():
