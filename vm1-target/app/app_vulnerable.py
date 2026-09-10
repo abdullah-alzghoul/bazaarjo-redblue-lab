@@ -1,11 +1,26 @@
 from flask import Flask, request, render_template_string, redirect, send_from_directory
 import os
 import sqlite3
+from werkzeug.utils import secure_filename
 
 app = Flask(__name__)
 UPLOAD_FOLDER = '/var/www/html/vulnerable-app/uploads'
 DB_PATH = '/var/www/html/vulnerable-app/users.db'
+
+ALLOWED_EXTENSIONS = {
+    'png',
+    'jpg',
+    'jpeg',
+    'gif',
+    'txt',
+    'pdf'
+}
+
 app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
+
+
+def allowed_file(filename):
+    return '.' in filename and filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
 
 def get_db():
     conn = sqlite3.connect(DB_PATH)
@@ -40,14 +55,30 @@ def index():
 @app.route('/upload', methods=['GET', 'POST'])
 def upload_file():
     if request.method == 'POST':
+
         if 'file' not in request.files:
             return 'No file part'
+
         file = request.files['file']
+
         if file.filename == '':
             return 'No selected file'
-        filename = file.filename
-        file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
-        return f'File uploaded successfully: <b>{filename}</b><br><a href="/uploads/{filename}">Access file</a>'
+
+        if file and allowed_file(file.filename):
+
+            filename = secure_filename(file.filename)
+
+            file.save(
+                os.path.join(
+                    app.config['UPLOAD_FOLDER'],
+                    filename
+                )
+            )
+
+            return f'File uploaded successfully: <b>{filename}</b><br><a href="/uploads/{filename}">Access file</a>'
+
+        return 'File type not allowed'
+
     return render_template_string('''
     <h2>File Upload</h2>
     <form method=post enctype=multipart/form-data>
