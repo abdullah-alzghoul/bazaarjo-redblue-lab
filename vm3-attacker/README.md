@@ -60,3 +60,14 @@ Network:
 ## Authorized Usage
 
 These tools are only for the isolated laboratory environment.
+
+## Red Team Attack Workflow
+
+The penetration testing workflow follows the same sequence used in the project methodology.
+
+### Phase 1 — Reconnaissance
+
+Run:
+
+```bash
+bash scripts/reconnaissance.sh
