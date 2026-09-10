@@ -141,18 +141,45 @@ def cmdi():
 
 @app.route('/sqli')
 def sqli():
+
     username = request.args.get('username', '')
+
     conn = get_db()
+
     c = conn.cursor()
-    query = f"SELECT * FROM users WHERE username = '{username}'"
+
+    query = """
+    SELECT id, username
+    FROM users
+    WHERE username = ?
+    """
+
     try:
-        c.execute(query)
+
+        c.execute(
+            query,
+            (username,)
+        )
+
         rows = c.fetchall()
-        result = f"<h2>User Lookup</h2><p>Query executed: <code>{query}</code></p><pre>{[dict(row) for row in rows]}</pre>"
+
+        result = [
+            dict(row)
+            for row in rows
+        ]
+
     except Exception as e:
-        result = f"<h2>Error</h2><pre>{str(e)}</pre>"
+
+        result = str(e)
+
+
     conn.close()
-    return render_template_string(result)
+
+
+    return render_template_string(
+        '<h2>User Lookup</h2><p>Parameterized Query Executed</p><pre>{{ result }}</pre>',
+        result=result
+    )
 
 if __name__ == '__main__':
     init_db()
