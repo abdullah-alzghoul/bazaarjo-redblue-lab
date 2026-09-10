@@ -30,7 +30,21 @@ Updated for Syslog & Combined Sourcetypes + Expanded Threat Vectors
 | sort - count
 
 -------------------------------------------------------------------------------
-3. Web Shell & Unrestricted File Upload Detection
+3. Cross-Site Scripting (XSS) Detection
+-------------------------------------------------------------------------------
+
+(sourcetype=access_combined OR sourcetype=syslog)
+("<script" OR "%3Cscript" OR "javascript:" OR "onerror=" OR "onload=")
+
+| stats count min(_time) as first_seen max(_time) as last_seen by src_ip, uri_path, uri_query, status
+
+| eval first_seen=strftime(first_seen,"%Y-%m-%d %H:%M:%S"),
+last_seen=strftime(last_seen,"%Y-%m-%d %H:%M:%S")
+
+| sort - count
+
+-------------------------------------------------------------------------------
+4. Web Shell & Unrestricted File Upload Detection
 -------------------------------------------------------------------------------
 (sourcetype=access_combined OR sourcetype=syslog) 
 (uri_path="*.php*" OR uri_path="*/uploads/*")
@@ -39,7 +53,7 @@ Updated for Syslog & Combined Sourcetypes + Expanded Threat Vectors
 | sort - count
 
 -------------------------------------------------------------------------------
-4. Additional Detection: SSRF Monitoring
+5. Additional Detection: SSRF Monitoring
 -------------------------------------------------------------------------------
 (sourcetype=access_combined OR sourcetype=syslog) 
 ("url=http*" OR "url=https*" OR "url=127.0.0.1*" OR "url=localhost*" OR "url=169.254.*")
@@ -48,7 +62,7 @@ Updated for Syslog & Combined Sourcetypes + Expanded Threat Vectors
 | sort - count
 
 -------------------------------------------------------------------------------
-5. Consolidated High-Risk Threat Dashboard Query
+6. Consolidated High-Risk Threat Dashboard Query
 -------------------------------------------------------------------------------
 (sourcetype=access_combined OR sourcetype=syslog) 
 ("..%2f" OR "../" OR "*whoami*" OR "*cat*" OR "*id*" OR "*uname*" OR "url=http*" OR "*.php*")
