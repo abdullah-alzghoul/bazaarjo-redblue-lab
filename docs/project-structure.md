@@ -24,6 +24,14 @@ bazaarjo-redblue-lab/
 │ └── README.md
 
 └── docs/
+├── report-sections/
+│   ├── README.md
+│   ├── 01-scope.md
+│   ├── 02-recon.md
+│   ├── 03-vulnerability-assessment.md
+│   ├── 04-exploitation.md
+│   ├── 05-detection-logs.md
+│   └── 06-remediation.md
 ├── attack_defense_timeline.md
 ├── deployment-guide.md
 ├── network_topology.md
