@@ -1,0 +1,62 @@
+# VM3 Attacker
+
+## Purpose
+
+VM3 represents the Red Team attacker machine used to perform authorized penetration testing against VM1 Target.
+
+The objective is to simulate attacks against the vulnerable application and generate security events for detection by VM2 SIEM.
+
+## Attack Components
+
+### payloads/
+
+Contains proof-of-concept attack payloads.
+
+- shell.php:
+  - Used to demonstrate unrestricted file upload exploitation.
+  - Simulates a malicious PHP web shell.
+
+### scripts/
+
+Contains exploitation and reconnaissance scripts.
+
+## Available Scripts
+
+### reconnaissance.sh
+
+Purpose:
+- Performs initial information gathering against VM1.
+
+Actions:
+- Nmap service discovery.
+- HTTP endpoint checking.
+
+### sqli_exploit.py
+
+Purpose:
+- Demonstrates SQL Injection exploitation.
+
+Target:
+- VM1 `/sqli` endpoint.
+
+### cmdi_exploit.py
+
+Purpose:
+- Demonstrates OS Command Injection exploitation.
+
+Target:
+- VM1 `/cmdi` endpoint.
+
+## Target Configuration
+
+VM1 Target IP:
+
+192.168.56.101
+
+Network:
+
+192.168.56.0/24
+
+## Authorized Usage
+
+These tools are only for the isolated laboratory environment.
