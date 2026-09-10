@@ -4,19 +4,31 @@ The repository is organized according to the four phases of the Red/Blue Team se
 
 bazaarjo-redblue-lab/
 
-├── vm1-target/
-│ ├── app/
-│ │ ├── app_vulnerable.py
-│ │ └── app_patched.py
-│ ├── config/
-│ └── scripts/
+vm1-target/
+├── app/
+│   ├── app_vulnerable.py
+│   ├── app_patched.py
+│   └── vulnerable_app.wsgi
+├── config/
+│   ├── apache_vhost.conf
+│   ├── bash_audit.sh
+│   └── rsyslog_forward.conf
+└── scripts/
+    └── setup_vm1.sh
 
-├── vm2-siem/
-│ └── config/
+vm2-siem/
+├── config/
+│   ├── indexes.conf
+│   └── splunk_inputs.conf
+├── scripts/
+│   └── setup_vm2.sh
+└── README.md
 
-├── vm3-attacker/
-│ ├── payloads/
-│ └── scripts/
+vm3-attacker/
+├── config/
+│   └── target.conf
+├── payloads/
+└── scripts/
 
 ├── detection-queries/
 │ ├── splunk_queries.spl
