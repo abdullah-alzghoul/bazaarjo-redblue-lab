@@ -8,6 +8,7 @@ bazaarjo-redblue-lab/
 │ ├── app/
 │ │ ├── app_vulnerable.py
 │ │ └── app_patched.py
+│ │
 │ ├── config/
 │ └── scripts/
 
