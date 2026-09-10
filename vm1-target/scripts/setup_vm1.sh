@@ -13,7 +13,7 @@ sudo chmod -R 755 /var/www/html/vulnerable-app
 
 echo "[+] Deploying application files..."
 
-sudo cp ../app/app_vulnerable.py /var/www/html/vulnerable-app/
+sudo cp ../app/app_patched.py /var/www/html/vulnerable-app/
 sudo cp ../app/vulnerable_app.wsgi /var/www/html/vulnerable-app/
 
 sudo mkdir -p /var/www/html/vulnerable-app/uploads
