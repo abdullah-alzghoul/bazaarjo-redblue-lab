@@ -1,2 +1,2 @@
 # This file keeps the detection-queries directory tracked by Git.
-# Detection rules are stored in README.md, splunk_queries.spl, and webshell_rule.yar.
+# Detection rules are stored in README.md, splunk_queries.spl, and php_webshell_detection.yar.
