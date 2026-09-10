@@ -47,6 +47,20 @@ Purpose:
 Target:
 - VM1 `/cmdi` endpoint.
 
+### xss_exploit.py
+
+Purpose:
+- Demonstrates Cross-Site Scripting (XSS) exploitation.
+
+Target:
+- VM1 `/xss` endpoint.
+
+Payload:
+- Sends a reflected JavaScript payload to verify XSS behavior.
+
+Expected Result:
+- The application response contains the injected payload, allowing the Blue Team to verify XSS detection rules.
+
 ## Target Configuration
 
 VM1 Target IP:
