@@ -1,7 +1,7 @@
 rule Detect_Bazaarjo_PHP_Webshell {
     meta:
         description = "Detects malicious PHP webshells uploaded to VM1 target"
-        author = "Osama - Blue Team"
+        author = "S3 - Blue Team / IR"
         date = "2026-09-08"
         severity = "HIGH"
 

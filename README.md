@@ -3,6 +3,10 @@
 A four-phase attack-defense lifecycle simulation built for Cybersecurity Graduation Field Training.
 This repository contains the complete infrastructure-as-code, detection logic, and documentation for a controlled penetration testing environment.
 
+## Lab Safety
+
+This lab is intentionally vulnerable. Run it only in an isolated lab environment on systems you own or are explicitly authorized to test. Do not expose the target VM to the public internet.
+
 ## My Contribution
 
 My contribution was **S1 - Architecture & Visibility**: lab setup, log forwarding, SIEM deployment, and the Git baseline.
@@ -27,9 +31,9 @@ This was a team project. The table below describes the division of responsibilit
 | **VM3-Attacker** | `192.168.56.103` | Offensive workstation | nmap, sqlmap, gobuster, netcat, curl |
 
 **Traffic Channels:**
-- 🔴 **Exploit:** VM3 → VM1 via HTTP/TCP 80
-- 🟢 **Telemetry:** VM1 → VM2 via Syslog/UDP 514
-- 🔵 **Remediation:** Analyst → VM1 via SSH/TCP 22
+- **Exploit:** VM3 → VM1 via HTTP/TCP 80
+- **Telemetry:** VM1 → VM2 via Syslog/UDP 514
+- **Remediation:** Analyst → VM1 via SSH/TCP 22
 
 ## Vulnerabilities Implemented
 
@@ -42,10 +46,10 @@ This was a team project. The table below describes the division of responsibilit
 
 - **Host RAM:** 6 GB minimum (8 GB recommended)
 - **Host Disk:** 100 GB free
-- **VMware Workstation Pro** 17.x+ or VirtualBox
-- **Kali Linux** 2024.x (all 3 VMs)
-- **Splunk Enterprise Free** 9.3.0+ (VM2)
-- **Git** 2.40+
+- **VMware Workstation Pro** or VirtualBox
+- **Kali Linux** (all 3 VMs)
+- **Splunk Enterprise** (VM2)
+- **Git**
 
 ## Quick Start
 
@@ -58,18 +62,24 @@ cd bazaarjo-redblue-lab
 
 ### 2. Setup VM1 Target
 
+```bash
 cd vm1-target/scripts
 chmod +x setup_vm1.sh
 ./setup_vm1.sh
+```
 
 ### 3. Setup VM2 SIEM
 
+```bash
 cd ../../vm2-siem/scripts
 chmod +x setup_vm2.sh
 ./setup_vm2.sh
+```
 
 ### 4. Start Red Team Testing
 
+```bash
 cd ../../vm3-attacker/scripts
 chmod +x reconnaissance.sh
 ./reconnaissance.sh
+```

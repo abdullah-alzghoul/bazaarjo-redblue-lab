@@ -1,6 +1,6 @@
 # Attack & Defense Incident Timeline
 
-This timeline documents the synchronized sequence of offensive operations executed by the Red Team (**Ashraf**) and the corresponding detection and incident response events captured by the Blue Team (**Osama**).
+This timeline documents the synchronized sequence of offensive operations executed by the Red Team and the corresponding detection and incident response events captured by the Blue Team.
 
 | Timestamp (UTC) | Phase | Red Team Action (VM3) | Blue Team Visibility & Alert (VM2 SIEM) | Status |
 |---|---|---|---|---|
