@@ -3,14 +3,20 @@
 A four-phase attack-defense lifecycle simulation built for Cybersecurity Graduation Field Training.
 This repository contains the complete infrastructure-as-code, detection logic, and documentation for a controlled penetration testing environment.
 
+## My Contribution
+
+My contribution was **S1 - Architecture & Visibility**: lab setup, log forwarding, SIEM deployment, and the Git baseline.
+
+This was a team project. The table below describes the division of responsibilities.
+
 ## Team Roles
 
-| Role | Student | Responsibility |
-|---|---|---|
-| **S1 — Architecture & Visibility** | **Abdallah Ali Abdallah Al-Zghoul** | Lab build, log forwarding, SIEM deployment, Git baseline |
-| **S2 — Red Team** | **Ashraf Khaled Al-Mashaqbeh** | Black-box penetration testing, exploit chain, RCE proof |
-| **S3 — Blue Team / IR** | **Osama Abdel-Fattah Al-Najjar** | SIEM timeline reconstruction, containment, detection queries |
-| **S4 — Mitigation & QA** | **Mohammad Mahmoud Ghaith** | Git-based code fixes, re-exploitation validation |
+| Role | Responsibility |
+|---|---|
+| **S1 - Architecture & Visibility (my role)** | Lab build, log forwarding, SIEM deployment, Git baseline |
+| **S2 - Red Team** | Black-box penetration testing, exploit chain, RCE proof |
+| **S3 - Blue Team / IR** | SIEM timeline reconstruction, containment, detection queries |
+| **S4 - Mitigation & QA** | Git-based code fixes, re-exploitation validation |
 
 ## Network Topology & Architecture
 
